@@ -34,7 +34,7 @@ if [ -d ~/bin/supernova ]; then
 fi
 
 # Install the supernovas
-mkdir ~/bin/supernova
+mkdir -p ~/bin/supernova
 cd ~/bin/supernova
 virtualenv --prompt="(SUPERNOVA)" .venv
 source .venv/bin/activate
