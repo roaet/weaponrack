@@ -6,7 +6,8 @@ internal network somehow.
 
 You can check this by attempting to ping an internal address.
 
-Steps to install this toolkit:
+Steps to install this toolkit
+-----------------------------
 
 1. Ensure you're connected to an internal network
 2. Run install_supernova.sh
@@ -19,11 +20,13 @@ Steps to install this toolkit:
    ~/bin/supernova/.venv/bin/activate
 9. Run config_supernova_keyrings.sh
 
-To uninstall this toolkit:
+To uninstall this toolkit
+-------------------------
 
 1. Ensure you're not in the virtual environment
 2. Run uninstall_supernova.sh
 
-To upgrade this toolkit:
+To upgrade this toolkit
+-----------------------
 
 1. uninstall then reinstall, but you can skip the credentials step
