@@ -1,14 +1,14 @@
 #!/bin/bash
 sn_environments=("preprodord" "netdev")
 il_environments=("inova-iad" "inova-ord" "inova-dfw" "inova-lon" "inova-syd")
-configured=False
+configured=0
 
-if [[ $UID -eq 0 ]]; then
+if [ $UID -eq 0 ]; then
     echo "$0 must not be run as root"
     exit 1
 fi
 
-if [ ! $configured ]; then
+if [ $configured -eq 0 ]; then
     echo "This needs to be configured. Edit this file $0 and change the"
     echo "sn_environments and il_environments accordingly"
 fi
