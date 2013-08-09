@@ -13,9 +13,9 @@ Steps to install this toolkit
 2. Run install_supernova.sh
 3. Edit the file config_supernova_keyrings.sh
 
-    a. Add environments to the sn_environments on line 2 if needed
-    b. Add environments to the il_environments on line 3 if needed
-    c. Change the value of configured to 1 from 0
+   a. Add environments to the sn_environments on line 2 if needed
+   b. Add environments to the il_environments on line 3 if needed
+   c. Change the value of configured to 1 from 0
 
 7. Prepare your API keys and SSO for entry and/or copy/paste
 8. Enter the virtual environment by running: source
