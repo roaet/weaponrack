@@ -6,6 +6,17 @@ the internal network for this installer to work.
 
 You can check this by attempting to ping an internal address.
 
+How to use
+----------
+
+snail installed by default in ~/bin/snail. To use it you must:
+
+1. activate the virtualenv [ source ~/bin/snail/.venv/bin/activate ]
+2. execute your supernova or inova-login of choice:
+
+   a. supernova <options>
+   b. inova-login -e <environment> <options>
+
 how to install
 --------------
 Usage: snail_installer [options]                                 
