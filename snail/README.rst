@@ -48,13 +48,14 @@ The snail configuration file follows the INI format::
 
   [inova-moonbase]
   #inova is a special type that is required for inova connection
+  #type is always required
   type = inova
   user = moonuser
   #sso is a special pw_type that will reuse a master pw prompted during install
+  #pw_type is always required
   pw_type = sso
 
   [inova-moonbase2]
-  #type is always required
   type = inova
   user = moonuser
   #prompt is a special pw_type that will force the user to prompt for a pw
@@ -64,6 +65,7 @@ The snail configuration file follows the INI format::
   #supernova is a special type that is required for supernova connections
   type = supernova
   user = moonuser
+  #tenant is properly substituted during generation for application options
   tenant = 123456
   #if pw_type is neither sso, or prompt, it will use it as a pw, as this API
   #key shows below
@@ -79,3 +81,15 @@ The snail configuration file follows the INI format::
   pw_type = 123456789abcdef123456789abcdef00
   #any configuration things applicable to supernova will be applied if added
   #here
+
+A summary of the above annotations follows:
+
+1. type is always required
+2. inova is a special type that is required for inova connection
+3. supernova is a special type that is required for supernova connection
+4. pw_type is always required
+5. sso is a special pw_type that will reuse a prompted password during install
+6. prompt is a special pw_type that will prompt for a password during install
+7. if pw_type is neither sso or prompt, it will use the value
+8. tenant will be used appropriately
+9. any additional options will be passed to the generated supernova conf
