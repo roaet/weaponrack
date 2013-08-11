@@ -46,6 +46,11 @@ Example snail.conf configuration file
 
 The snail configuration file follows the INI format::
 
+  #everything in this section is absolutely required
+  [snail]
+  inova_repo = github.moonbase.com/moonuser/inova-login.git
+  template_repo = https://github.moonbase.com/moonuser/weaponrack_secure.git
+
   [inova-moonbase]
   #inova is a special type that is required for inova connection
   #type is always required
@@ -84,12 +89,13 @@ The snail configuration file follows the INI format::
 
 A summary of the above annotations follows:
 
-1. type is always required
-2. inova is a special type that is required for inova connection
-3. supernova is a special type that is required for supernova connection
-4. pw_type is always required
-5. sso is a special pw_type that will reuse a prompted password during install
-6. prompt is a special pw_type that will prompt for a password during install
-7. if pw_type is neither sso or prompt, it will use the value
-8. tenant will be used appropriately
-9. any additional options will be passed to the generated supernova conf
+1. the snail section and all options in it are required
+2. type is always required
+3. inova is a special type that is required for inova connection
+4. supernova is a special type that is required for supernova connection
+5. pw_type is always required
+6. sso is a special pw_type that will reuse a prompted password during install
+7. prompt is a special pw_type that will prompt for a password during install
+8. if pw_type is neither sso or prompt, it will use the value
+9. tenant will be used appropriately
+10. any additional options will be passed to the generated supernova conf

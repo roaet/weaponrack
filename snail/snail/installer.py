@@ -27,10 +27,35 @@ class SnailInstaller(object):
         self.no_inova = no_inova
         self.install_path = INSTALL_PATH
         self.uninstall = uninstall
+        self.inova_repo = None
+        self.template_repo = None
 
     def abort(self):
         common.remove_dir(self.install_path)
         common.exit(1)
+
+    def check_snail_conf(self):
+        snail_conf = "%s/snail.conf" % common.get_home()
+        if not common.check_file(snail_conf):
+            LOG.error("Could not locate snail.conf")
+            self.abort()
+        snail_config = ConfigParser.ConfigParser()
+        snail_config.readfp(open(snail_conf))
+
+        if not snail_config.has_section("snail"):
+            LOG.error("snail.conf is missing snail section")
+            common.exit(1)
+
+        if not snail_config.has_option("snail", "inova_repo"):
+            LOG.error("snail.conf is missing inova_repo option")
+            common.exit(1)
+
+        if not snail_config.has_option("snail", "template_repo"):
+            LOG.error("snail.conf is missing template_repo option")
+            common.exit(1)
+
+        self.inova_repo = snail_config.get("snail", "inova_repo")
+        self.inova_repo = snail_config.get("snail", "template_repo")
 
     def run(self, reinstall=False, refresh_conf=False, overwrite=False):
         if self.uninstall:
@@ -185,13 +210,13 @@ class SnailInstaller(object):
             LOG.error("Could not install %s" % pkg)
             self.abort()
 
-        pkg = "github.rackspace.com/major-hayden/inova-login.git"
+        pkg = self.inova_repo
         if not common.install_git_package(pkg, "inova-login"):
             LOG.error("Could not install %s" % pkg)
             self.abort()
 
     def generate_supernova_conf(self):
-        repo = "https://github.rackspace.com/just5245/weaponrack_secure.git"
+        repo = self.template_repo
         secure_dir = "%s/%s" % (self.install_path, "secure")
         if common.check_dir(secure_dir):
             common.remove_dir(secure_dir)
