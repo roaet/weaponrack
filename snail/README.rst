@@ -6,6 +6,12 @@ the internal network for this installer to work.
 
 You can check this by attempting to ping an internal address.
 
+What does it do?
+----------------
+
+snail will generate a special supernova configuration file that allows it to
+manage the authentication information. 
+
 How to use
 ----------
 
@@ -19,6 +25,7 @@ snail installed by default in ~/bin/snail. To use it you must:
 
 How to install
 --------------
+
 Usage: snail_installer [options]                                 
                                                                  
 Options:                                                         
@@ -28,3 +35,47 @@ Options:
   --refresh      just refresh conf and do not attempt to install 
   --uninstall    remove snail install except system packages     
   -v, --verbose  output all available information                
+
+It is necessary to have in your user home a snail.conf file. This file
+will provide snail the information to generate your proper credentials for all
+environments. This file also maintains the references to the remote
+repositories that will be needed to gather template files.
+
+Example snail.conf configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The snail configuration file follows the INI format::
+
+  [inova-moonbase]
+  #inova is a special type that is required for inova connection
+  type = inova
+  user = moonuser
+  #sso is a special pw_type that will reuse a master pw prompted during install
+  pw_type = sso
+
+  [inova-moonbase2]
+  #type is always required
+  type = inova
+  user = moonuser
+  #prompt is a special pw_type that will force the user to prompt for a pw
+  pw_type = prompt
+
+  [moonbase-cloud]
+  #supernova is a special type that is required for supernova connections
+  type = supernova
+  user = moonuser
+  tenant = 123456
+  #if pw_type is neither sso, or prompt, it will use it as a pw, as this API
+  #key shows below
+  pw_type = 123456789abcdef123456789abcdef00
+
+  [moonbase2-cloud]
+  type = supernova
+  #custom endpoints, can be specified this way
+  endpoint = https://identity.api.mooncloud.com/v2.0
+  region = MOON
+  user = moonuser
+  tenant = 123456
+  pw_type = 123456789abcdef123456789abcdef00
+  #any configuration things applicable to supernova will be applied if added
+  #here
