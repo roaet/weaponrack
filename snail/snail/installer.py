@@ -20,24 +20,33 @@ class SnailInstaller(object):
     noop = False
     no_inova = False
 
-    def __init__(self, verbose=False, noop=False, no_inova=False):
+    def __init__(self, verbose=False, noop=False, no_inova=False,
+                 uninstall=False):
         self.verbose = verbose
         self.noop = noop
         self.no_inova = no_inova
         self.install_path = INSTALL_PATH
+        self.uninstall = uninstall
 
     def abort(self):
         common.remove_dir(self.install_path)
         common.exit(1)
 
-    def run(self, reinstall=False, refresh_conf=False):
+    def run(self, reinstall=False, refresh_conf=False, overwrite=False):
+        if self.uninstall:
+            LOG.info("Uninstalling snail _@/")
+            if not common.check_dir(self.install_path):
+                LOG.error("Not installed. Not that bad really.")
+                common.exit(1)
+            common.remove_dir(self.install_path)
+            common.exit(0)
         LOG.info("Installing snail _@/")
         if not common.check_basics(require_super=False, require_venv=False):
             common.exit(1)
 
         if not refresh_conf:
             self.install(reinstall)
-        if not self.backup_existing_supernova_conf():
+        if not self.backup_existing_supernova_conf(overwrite=overwrite):
             exit(1)
         self.generate_supernova_conf()
         if not self.configure_keyring():
@@ -106,7 +115,7 @@ class SnailInstaller(object):
         scommon.pexpect_inovalogin(sso, verbose=self.verbose, noop=self.noop)
         return True
 
-    def backup_existing_supernova_conf(self):
+    def backup_existing_supernova_conf(self, overwrite=False):
         sn_conf = "%s/.supernova" % common.get_home()
         sn_bak = sn_conf + ".bak"
         if not common.check_file(sn_conf):
@@ -120,7 +129,7 @@ class SnailInstaller(object):
             return True
         if common.check_file(sn_bak):
             LOG.error("Backup already exists! Confirm with --overwrite")
-            if not DEBUG:
+            if not overwrite:
                 return False
         LOG.info("Backing up existing conf to %s" % sn_bak)
         common.copy_file(sn_conf, sn_bak)
