@@ -17,7 +17,7 @@ snail installed by default in ~/bin/snail. To use it you must:
    a. supernova <options>
    b. inova-login -e <environment> <options>
 
-how to install
+How to install
 --------------
 Usage: snail_installer [options]                                 
                                                                  
