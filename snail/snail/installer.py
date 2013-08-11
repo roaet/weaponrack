@@ -2,6 +2,7 @@ import ConfigParser
 import logging
 
 import snail.common as common
+import snail.snail_common as scommon
 
 
 LOG = logging.getLogger("snail." + __name__)
@@ -98,11 +99,11 @@ class SnailInstaller(object):
                             if DEBUG:
                                 exit(1)
                             self.abort()
-                    common.pexpect_supernova(section, k, pw,
-                                             verbose=self.verbose,
-                                             noop=self.noop)
+                    scommon.pexpect_supernova(section, k, pw,
+                                              verbose=self.verbose,
+                                              noop=self.noop)
 
-        common.pexpect_inovalogin(sso, verbose=self.verbose, noop=self.noop)
+        scommon.pexpect_inovalogin(sso, verbose=self.verbose, noop=self.noop)
         return True
 
     def backup_existing_supernova_conf(self):

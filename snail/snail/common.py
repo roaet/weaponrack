@@ -2,7 +2,6 @@ import errno
 import getpass
 import logging
 import os
-import pexpect
 import shutil
 import sys
 import subprocess
@@ -169,29 +168,3 @@ def remove_dir(path):
 
 def remove_file(path):
     os.remove(path)
-
-
-def pexpect_supernova(env, parameter, password, verbose=False, noop=False):
-    cmd = 'supernova-keyring -s %s %s' % (env, parameter)
-    child = pexpect.spawn(cmd)
-    if verbose:
-        child.logfile = sys.stdout
-    child.expect('.*abort: ')
-    if noop:
-        LOG.info('Would send %s' % password)
-        child.sendcontrol('d')
-    else:
-        child.sendline(password)
-
-
-def pexpect_inovalogin(password, verbose=False, noop=False):
-    cmd = 'inova-login -s'
-    child = pexpect.spawn(cmd)
-    if verbose:
-        child.logfile = sys.stdout
-    child.expect('Password:*')
-    if noop:
-        LOG.info('Would send %s' % password)
-        child.sendcontrol('d')
-    else:
-        child.sendline(password)
