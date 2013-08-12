@@ -55,7 +55,7 @@ class SnailInstaller(object):
             common.exit(1)
 
         self.inova_repo = snail_config.get("snail", "inova_repo")
-        self.inova_repo = snail_config.get("snail", "template_repo")
+        self.template_repo = snail_config.get("snail", "template_repo")
 
     def run(self, reinstall=False, refresh_conf=False, overwrite=False):
         if self.uninstall:
@@ -68,6 +68,8 @@ class SnailInstaller(object):
         LOG.info("Installing snail _@/")
         if not common.check_basics(require_super=False, require_venv=False):
             common.exit(1)
+
+        self.check_snail_conf()
 
         if not refresh_conf:
             self.install(reinstall)
@@ -181,7 +183,7 @@ class SnailInstaller(object):
             self.abort()
 
         venv_path = "%s/%s" % (self.install_path, ".venv")
-        if not common.install_virtual_env("( _@/ )", venv_path):
+        if not common.install_virtual_env("(_@/)", venv_path):
             LOG.error("Could not create virtualenv")
             self.abort()
 

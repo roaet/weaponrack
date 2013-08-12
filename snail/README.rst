@@ -44,6 +44,12 @@ repositories that will be needed to gather template files.
 Example snail.conf configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+You will notice that a lot of information, such as endpoint URLs and other
+things aren't listed below. A lot of those details are stored in a remote repo
+and are brought in by the installer.
+
+Custom endpoints are possible if necessary by adding an endpoint options.
+
 The snail configuration file follows the INI format::
 
   #everything in this section is absolutely required

@@ -145,8 +145,8 @@ def install_system_package(package, with_sudo=True):
 
 
 def install_virtual_env(prompt, location):
-    cmd = ("virtualenv --distribute --no-site-packages %s" % location).\
-        split(" ")
+    cmd = ("virtualenv --prompt='%s' --distribute --no-site-packages %s" %
+           (prompt, location)).split(" ")
     response = subprocess.call(cmd)
     return response == 0
 
