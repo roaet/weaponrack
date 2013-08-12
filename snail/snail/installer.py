@@ -77,10 +77,12 @@ class SnailInstaller(object):
 
         self.check_snail_conf()
 
-        if not refresh_conf:
-            self.install(reinstall)
         if not self.backup_existing_supernova_conf(overwrite=overwrite):
             exit(1)
+        if not self.backup_existing_inova_conf(overwrite=overwrite):
+            exit(1)
+        if not refresh_conf:
+            self.install(reinstall)
         self.generate_supernova_conf()
         if not self.configure_keyring():
             if not DEBUG:
@@ -146,6 +148,7 @@ class SnailInstaller(object):
                                               noop=self.noop)
 
         scommon.pexpect_inovalogin(sso, verbose=self.verbose, noop=self.noop)
+        LOG.info("If you did not like what you saw, rerun with --refresh")
         return True
 
     def backup_existing_supernova_conf(self, overwrite=False):
@@ -166,6 +169,26 @@ class SnailInstaller(object):
                 return False
         LOG.info("Backing up existing conf to %s" % sn_bak)
         common.copy_file(sn_conf, sn_bak)
+
+    def backup_existing_inova_conf(self, overwrite=False):
+        in_conf = "%s/.inova-login" % common.get_home()
+        in_bak = in_conf + ".bak"
+        if not common.check_file(in_conf):
+            LOG.info("No pre-existing inova conf found")
+            return True
+        #check if existing supernova conf is a snail conf
+        conf_check = ConfigParser.ConfigParser()
+        conf_check.readfp(open(in_conf))
+        if conf_check.has_section("inova-config") and\
+                conf_check.has_option("inova-config", "snail-gen"):
+            """ No need to back up a snail config file."""
+            return True
+        if common.check_file(in_bak):
+            LOG.error("Backup already exists! Confirm with --overwrite")
+            if not overwrite:
+                return False
+        LOG.info("Backing up existing conf to %s" % in_bak)
+        common.copy_file(in_conf, in_bak)
         return True
 
     def install(self, reinstall=False):
