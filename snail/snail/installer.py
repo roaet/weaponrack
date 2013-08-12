@@ -175,6 +175,7 @@ class SnailInstaller(object):
                 return False
         LOG.info("Backing up existing conf to %s" % sn_bak)
         common.copy_file(sn_conf, sn_bak)
+        return True
 
     def backup_existing_inova_conf(self, overwrite=False):
         in_conf = "%s/.inova-login" % common.get_home()
