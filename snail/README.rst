@@ -41,6 +41,9 @@ will provide snail the information to generate your proper credentials for all
 environments. This file also maintains the references to the remote
 repositories that will be needed to gather template files.
 
+The command line option of --refresh will allow you to reload the credentials
+and add new endpoints/targets if necessary.
+
 Example snail.conf configuration file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
