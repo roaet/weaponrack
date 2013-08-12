@@ -164,8 +164,8 @@ class SnailInstaller(object):
             """ No need to back up a snail config file."""
             return True
         if common.check_file(sn_bak):
-            LOG.error("Backup already exists! Confirm with --overwrite")
             if not overwrite:
+                LOG.error("Backup already exists! Confirm with --overwrite")
                 return False
         LOG.info("Backing up existing conf to %s" % sn_bak)
         common.copy_file(sn_conf, sn_bak)
@@ -184,8 +184,8 @@ class SnailInstaller(object):
             """ No need to back up a snail config file."""
             return True
         if common.check_file(in_bak):
-            LOG.error("Backup already exists! Confirm with --overwrite")
             if not overwrite:
+                LOG.error("Backup already exists! Confirm with --overwrite")
                 return False
         LOG.info("Backing up existing conf to %s" % in_bak)
         common.copy_file(in_conf, in_bak)
