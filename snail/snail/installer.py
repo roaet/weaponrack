@@ -82,11 +82,17 @@ class SnailInstaller(object):
         if not self.backup_existing_inova_conf(overwrite=overwrite):
             exit(1)
         if not refresh_conf:
+            LOG.info("Starting install")
             self.install(reinstall)
+            LOG.info("Finished install")
+        LOG.info("Generating supernova and inova conf")
         self.generate_supernova_conf()
+        LOG.info("Finished generating supernova and inova conf")
+        LOG.info("Configuring keyrings")
         if not self.configure_keyring():
             if not DEBUG:
                 self.abort()
+        LOG.info("Done configuring keyrings")
         self.confirm_inovas()
 
     def confirm_inovas(self):
