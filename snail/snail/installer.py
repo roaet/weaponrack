@@ -179,8 +179,8 @@ class SnailInstaller(object):
         #check if existing supernova conf is a snail conf
         conf_check = ConfigParser.ConfigParser()
         conf_check.readfp(open(in_conf))
-        if conf_check.has_section("inova-config") and\
-                conf_check.has_option("inova-config", "snail-gen"):
+        if conf_check.has_section("inova-login") and\
+                conf_check.has_option("inova-login", "snail-gen"):
             """ No need to back up a snail config file."""
             return True
         if common.check_file(in_bak):
