@@ -29,6 +29,7 @@ class SnailInstaller(object):
         self.uninstall = uninstall
         self.inova_repo = None
         self.template_repo = None
+        self.inova_user = None
 
     def abort(self):
         common.remove_dir(self.install_path)
@@ -54,8 +55,13 @@ class SnailInstaller(object):
             LOG.error("snail.conf is missing template_repo option")
             common.exit(1)
 
+        if not snail_config.has_option("snail", "inova_user"):
+            LOG.error("snail.conf is missing inova_user option")
+            common.exit(1)
+
         self.inova_repo = snail_config.get("snail", "inova_repo")
         self.template_repo = snail_config.get("snail", "template_repo")
+        self.inova_user = snail_config.get("snail", "inova_user")
 
     def run(self, reinstall=False, refresh_conf=False, overwrite=False):
         if self.uninstall:
@@ -308,4 +314,24 @@ class SnailInstaller(object):
                         out_config.set(title, item_key, item_value)
         out_config.write(open(out_file, 'w+'))
         sn_conf = "%s/.supernova" % common.get_home()
+        common.copy_file(out_file, sn_conf)
+
+        seed_file = "%s/snail/inova_seed.conf" % secure_dir
+        remote_config = ConfigParser.ConfigParser()
+        remote_config.readfp(open(seed_file))
+
+        out_file = "%s/snail/inovalogin_out.conf" % secure_dir
+        if common.check_file(out_file):
+            common.remove_file(out_file)
+        out_config = ConfigParser.ConfigParser()
+
+        out_config.add_section("inova-login")
+        for k, v in remote_config.items('inova-login'):
+            value = v
+            if v == 'USER':
+                value = self.inova_user
+            out_config.set("inova-login", k, value)
+        out_config.set("inova-login", "snail_gen", "1")
+        out_config.write(open(out_file, 'w+'))
+        sn_conf = "%s/.inova-login" % common.get_home()
         common.copy_file(out_file, sn_conf)

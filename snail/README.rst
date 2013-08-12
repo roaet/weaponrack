@@ -59,6 +59,7 @@ The snail configuration file follows the INI format::
   [snail]
   inova_repo = github.moonbase.com/moonuser/inova-login.git
   template_repo = https://github.moonbase.com/moonuser/weaponrack_secure.git
+  inova_user = moonuser
 
   [inova-moonbase]
   #inova is a special type that is required for inova connection
