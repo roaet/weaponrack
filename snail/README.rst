@@ -12,6 +12,13 @@ What does it do?
 snail will generate a special supernova configuration file that allows it to
 manage the authentication information. 
 
+Requirements
+------------
+
+Snail requires at least the following is installed on your system:
+
+1. Distribute 
+
 How to use
 ----------
 
