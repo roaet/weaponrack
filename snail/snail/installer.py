@@ -149,7 +149,7 @@ class SnailInstaller(object):
                             if DEBUG:
                                 exit(1)
                             self.abort()
-                    scommon.pexpect_supernova(section, k, pw,
+                    scommon.pexpect_supernova(section, k.upper(), pw,
                                               verbose=self.verbose,
                                               noop=self.noop)
 
@@ -243,7 +243,7 @@ class SnailInstaller(object):
             LOG.error("Could not install %s" % pkg)
             self.abort()
 
-        pkg = "github.com/roaet/supernova.git"
+        pkg = "github.com/major/supernova.git"
         if not common.install_git_package(pkg, "supernova"):
             LOG.error("Could not install %s" % pkg)
             self.abort()

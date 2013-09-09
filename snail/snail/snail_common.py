@@ -27,6 +27,8 @@ def pexpect_supernova(env, parameter, password, verbose=False, noop=False):
         child.sendcontrol('d')
     else:
         child.sendline(password)
+    child.expect("\n")
+    child.expect("\n")
 
 
 def pexpect_inovalogin(password, verbose=False, noop=False):
